@@ -6,7 +6,7 @@ import (
 
 const SearchCommand = "SearchCommand"
 
-func GetHystrixLibraryConfig() map[string]hystrix.CommandConfig {
+func (conf Config) GetHystrixLibraryConfig() map[string]hystrix.CommandConfig {
 	return map[string]hystrix.CommandConfig{
 		SearchCommand: newHystrixConfig(),
 	}

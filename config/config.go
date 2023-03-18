@@ -8,6 +8,7 @@ import (
 type Config struct {
 	port          string
 	hystrixConfig hystrix.CommandConfig
+	esConfig      ElasticSearchConfig
 }
 
 func Load() Config {
@@ -16,6 +17,7 @@ func Load() Config {
 	return Config{
 		port:          getStringValue("APP_PORT"),
 		hystrixConfig: newHystrixConfig(),
+		esConfig:      newESConfig(),
 	}
 }
 

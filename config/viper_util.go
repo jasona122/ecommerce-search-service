@@ -11,6 +11,7 @@ func getStringValue(key string) string {
 	if !viper.IsSet(key) {
 		panic(fmt.Sprintf("key: #{key} is not yet set"))
 	}
+
 	return viper.GetString(key)
 }
 
@@ -19,5 +20,6 @@ func getIntValue(key string) int {
 	if err != nil {
 		panic(fmt.Sprintf("key: #{key} is not an integer value"))
 	}
+
 	return value
 }
