@@ -14,7 +14,7 @@ func ProductSearch(service productsearch.Service) http.HandlerFunc {
 
 		results, err := service.GetAllProducts(r.Context(), req)
 		if err != nil {
-			errorMessage := fmt.Sprintf("error in getting all products: %s", err)
+			errorMessage := fmt.Sprintf("error in getting products for query %s: %s", req.Query, err)
 			writeResponseJSON(w, contracts.InternalErrorResponse(errorMessage))
 		}
 

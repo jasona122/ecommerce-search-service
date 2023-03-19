@@ -18,14 +18,13 @@ type ESProductSearchResultSource struct {
 }
 
 type ProductSearchResult struct {
-	Name          string          `json:"name"`
-	Category      ProductCategory `json:"category"`
-	Description   string          `json:"description"`
-	ImageURL      string          `json:"image_url"`
-	Price         float32         `json:"price"`
-	Quantity      int             `json:"quantity"`
-	ServiceAreaID string          `json:"service_area_id"`
-	ShopName      string          `json:"shop_name"`
+	Name        string          `json:"name"`
+	Category    ProductCategory `json:"category"`
+	Description string          `json:"description"`
+	ImageURL    string          `json:"image_url"`
+	Price       float32         `json:"price"`
+	Quantity    int             `json:"quantity"`
+	ShopName    string          `json:"shop_name"`
 }
 
 type ProductSearchResponse struct {
