@@ -21,3 +21,10 @@ func writeResponseJSON(w http.ResponseWriter, response contracts.Response) {
 	responseJSON, _ := response.ToJSON()
 	w.Write(responseJSON)
 }
+
+func transformRequest(r *http.Request) contracts.Request {
+	return contracts.Request{
+		Query:         getQueryFromQueryParam(r),
+		ServiceAreaID: getServiceAreaIDFromHeader(r),
+	}
+}

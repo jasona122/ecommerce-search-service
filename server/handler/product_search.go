@@ -26,10 +26,3 @@ func ProductSearch(service productsearch.Service) http.HandlerFunc {
 		})
 	}
 }
-
-func transformRequest(r *http.Request) contracts.Request {
-	return contracts.Request{
-		Query:         getQueryFromQueryParam(r),
-		ServiceAreaID: getServiceAreaIDFromHeader(r),
-	}
-}
