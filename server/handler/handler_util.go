@@ -22,6 +22,28 @@ func writeResponseJSON(w http.ResponseWriter, response contracts.Response) {
 	w.Write(responseJSON)
 }
 
+func writeSuccessResponse(w http.ResponseWriter, results []contracts.ProductSearchResult) {
+	writeResponseJSON(w, contracts.Response{
+		StatusCode: http.StatusOK,
+		Data:       contracts.ProductSearchResponse{Results: results},
+		Success:    true,
+		Errors:     nil,
+	})
+}
+
+func writeFailureResponse(w http.ResponseWriter, statusCode int, message string) {
+	errorResponse := contracts.ResponseError{
+		Message: message,
+	}
+
+	writeResponseJSON(w, contracts.Response{
+		StatusCode: statusCode,
+		Data:       contracts.EmptyResponseData{},
+		Success:    false,
+		Errors:     contracts.ResponseErrors{errorResponse},
+	})
+}
+
 func transformRequest(r *http.Request) contracts.Request {
 	return contracts.Request{
 		Query:         getQueryFromQueryParam(r),
