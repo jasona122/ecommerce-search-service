@@ -4,19 +4,17 @@ import (
 	"fmt"
 
 	"github.com/jasona122/ecommerce-search-service/config"
+	"github.com/jasona122/ecommerce-search-service/elasticsearch"
 	s "github.com/jasona122/ecommerce-search-service/server"
 	"github.com/jasona122/ecommerce-search-service/service"
 	"github.com/jasona122/ecommerce-search-service/service/productsearch"
-	"github.com/jasona122/ecommerce-search-service/service/productsearch/elasticsearch"
 
-	"github.com/afex/hystrix-go/hystrix"
 	"github.com/codegangsta/negroni"
 )
 
 func main() {
 	configs := config.Load()
 	services := initServices(configs)
-	hystrix.Configure(configs.GetHystrixLibraryConfig())
 
 	server := negroni.New(negroni.NewRecovery())
 	address := fmt.Sprintf(":%s", configs.GetPortNumber())

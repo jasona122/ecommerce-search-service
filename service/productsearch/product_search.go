@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/jasona122/ecommerce-search-service/contracts"
-	"github.com/jasona122/ecommerce-search-service/service/productsearch/elasticsearch"
+	"github.com/jasona122/ecommerce-search-service/elasticsearch"
 )
 
 type Service interface {
@@ -22,7 +22,7 @@ func NewService(esService elasticsearch.Service) Service {
 }
 
 func (s service) GetAllProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error) {
-	esResults, err := s.esService.Search(ctx, req.Query, req.ServiceAreaID)
+	esResults, err := s.esService.SearchProducts(ctx, req.Query, req.ServiceAreaID)
 	if err != nil {
 		return []contracts.ProductSearchResult{}, err
 	}
