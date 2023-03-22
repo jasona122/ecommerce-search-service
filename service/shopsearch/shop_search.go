@@ -1,4 +1,4 @@
-package productsearch
+package shopsearch
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 )
 
 type Service interface {
-	GetAllProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error)
+	GetAllProductsFromShop(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error)
 }
 
 type service struct {
@@ -21,8 +21,8 @@ func NewService(esService elasticsearch.Service) Service {
 	}
 }
 
-func (s service) GetAllProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error) {
-	esResults, err := s.esService.SearchProducts(ctx, req.Query, req.ServiceAreaID)
+func (s service) GetAllProductsFromShop(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error) {
+	esResults, err := s.esService.SearchShops(ctx, req.Query, req.ServiceAreaID)
 	if err != nil {
 		return []contracts.ProductSearchResult{}, err
 	}

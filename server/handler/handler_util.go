@@ -10,6 +10,10 @@ func getQueryFromQueryParam(r *http.Request) string {
 	return r.URL.Query().Get("query")
 }
 
+func getCategoryFromQueryParam(r *http.Request) string {
+	return r.URL.Query().Get("category")
+}
+
 func getServiceAreaIDFromHeader(r *http.Request) string {
 	return r.Header.Get("Service-Area-ID")
 }
@@ -47,6 +51,7 @@ func writeFailureResponse(w http.ResponseWriter, statusCode int, message string)
 func transformRequest(r *http.Request) contracts.Request {
 	return contracts.Request{
 		Query:         getQueryFromQueryParam(r),
+		Category:      getCategoryFromQueryParam(r),
 		ServiceAreaID: getServiceAreaIDFromHeader(r),
 	}
 }

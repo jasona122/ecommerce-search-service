@@ -14,6 +14,7 @@ func NewRouter(services service.Services) *mux.Router {
 
 	router.HandleFunc("/ping", handler.PingHandler)
 	router.HandleFunc("/products", handler.ProductSearch(services.ProductSearchService)).Methods(http.MethodGet)
+	router.HandleFunc("/shop", handler.ShopSearch(services.ShopSearchService)).Methods(http.MethodGet)
 
 	return router
 }
