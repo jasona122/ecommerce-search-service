@@ -34,16 +34,7 @@ func (s service) GetAllProductsFromShop(ctx context.Context, req contracts.Reque
 			continue
 		}
 
-		searchResult := contracts.ProductSearchResult{
-			Name:        result.Name,
-			Category:    result.Category,
-			Description: result.Description,
-			ImageURL:    result.ImageURL,
-			Price:       result.Price,
-			Quantity:    result.Quantity,
-			ShopName:    result.ShopName,
-		}
-		searchResults = append(searchResults, searchResult)
+		searchResults = append(searchResults, result.TransformToProductSearchResult())
 	}
 
 	return searchResults, nil

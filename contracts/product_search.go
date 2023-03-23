@@ -34,3 +34,15 @@ type ProductSearchResponse struct {
 func (response ProductSearchResponse) DataMarker() {
 
 }
+
+func (result ESProductSearchResultSource) TransformToProductSearchResult() ProductSearchResult {
+	return ProductSearchResult{
+		Name:        result.Name,
+		Category:    result.Category,
+		Description: result.Description,
+		ImageURL:    result.ImageURL,
+		Price:       result.Price,
+		Quantity:    result.Quantity,
+		ShopName:    result.ShopName,
+	}
+}
