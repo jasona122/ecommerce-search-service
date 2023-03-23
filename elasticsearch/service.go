@@ -13,7 +13,7 @@ import (
 )
 
 type Service interface {
-	SearchProducts(ctx context.Context, query string, serviceAreaID string) ([]contracts.ESProductSearchResultSource, error)
+	SearchProducts(ctx context.Context, query string, category string, serviceAreaID string) ([]contracts.ESProductSearchResultSource, error)
 	SearchShops(ctx context.Context, query string, serviceAreaID string) ([]contracts.ESProductSearchResultSource, error)
 }
 
@@ -38,8 +38,8 @@ func NewProductSearchESService(esConfig config.ElasticSearchConfig) (Service, er
 	}, nil
 }
 
-func (s service) SearchProducts(ctx context.Context, query string, serviceAreaID string) ([]contracts.ESProductSearchResultSource, error) {
-	esQuery := getProductSearchQuery(ctx, query, serviceAreaID)
+func (s service) SearchProducts(ctx context.Context, query string, category string, serviceAreaID string) ([]contracts.ESProductSearchResultSource, error) {
+	esQuery := getProductSearchQuery(ctx, query, category, serviceAreaID)
 	return s.search(ctx, esQuery)
 }
 
@@ -70,10 +70,10 @@ func (s service) search(ctx context.Context, esQuery elastic.Query) ([]contracts
 	return productResults, nil
 }
 
-func getProductSearchQuery(ctx context.Context, query string, serviceAreaID string) elastic.Query {
+func getProductSearchQuery(ctx context.Context, query string, category string, serviceAreaID string) elastic.Query {
 	query = strings.ToLower(query)
 
-	return elastic.
+	productSearchQuery := elastic.
 		NewBoolQuery().
 		Filter(elastic.NewTermQuery("service_area_id", serviceAreaID)).
 		Must(
@@ -83,6 +83,12 @@ func getProductSearchQuery(ctx context.Context, query string, serviceAreaID stri
 					elastic.NewMatchQuery("description", query).Operator("AND").Fuzziness("AUTO"),
 				),
 		)
+
+	if category != "" {
+		productSearchQuery.Filter(elastic.NewTermQuery("category", category))
+	}
+
+	return productSearchQuery
 }
 
 func getShopSearchQuery(ctx context.Context, query string, serviceAreaID string) elastic.Query {

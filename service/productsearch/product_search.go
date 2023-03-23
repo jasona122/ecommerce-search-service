@@ -22,7 +22,12 @@ func NewService(esService elasticsearch.Service) Service {
 }
 
 func (s service) GetAllProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error) {
-	esResults, err := s.esService.SearchProducts(ctx, req.Query, req.ServiceAreaID)
+	productCategory := ""
+	if contracts.IsValidProductCategory(req.Category) {
+		productCategory = req.Category
+	}
+
+	esResults, err := s.esService.SearchProducts(ctx, req.Query, productCategory, req.ServiceAreaID)
 	if err != nil {
 		return []contracts.ProductSearchResult{}, err
 	}
