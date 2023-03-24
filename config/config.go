@@ -6,6 +6,7 @@ import (
 
 type Config struct {
 	port     string
+	dbConfig DatabaseConfig
 	esConfig ElasticSearchConfig
 }
 
@@ -14,6 +15,7 @@ func Load() Config {
 
 	return Config{
 		port:     getStringValue("APP_PORT"),
+		dbConfig: newDBConfig(),
 		esConfig: newESConfig(),
 	}
 }

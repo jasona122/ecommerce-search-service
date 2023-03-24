@@ -11,6 +11,9 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: always
     ports:
       - 8080:8080
   elasticsearch:
@@ -27,6 +30,24 @@ services:
       interval: 30s
       timeout: 10s
       retries: 50
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: trending
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports: 
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 volumes:
   es_data:
+    driver: local
+  db-data:
     driver: local
