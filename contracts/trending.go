@@ -15,7 +15,7 @@ type GetTrendingServiceResult struct {
 }
 
 type GetTrendingServiceResponse struct {
-	Results []GetTrendingServiceResponse `json:"results"`
+	Results []GetTrendingServiceResult `json:"results"`
 }
 
 func (response GetTrendingServiceResponse) DataMarker() {

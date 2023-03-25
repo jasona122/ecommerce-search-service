@@ -19,7 +19,7 @@ const (
 )
 
 type Store interface {
-	GetTrendingQueries(ctx context.Context, serviceAreaID string) ([]contracts.TrendingSchemaDB, error)
+	GetTopTrendingQueries(ctx context.Context, serviceAreaID string) ([]contracts.TrendingSchemaDB, error)
 	AddTrendingQuery(ctx context.Context, query string, serviceAreaID string) (contracts.EditTrendingServiceResponse, error)
 	DeleteTrendingQuery(ctx context.Context, query string, serviceAreaID string) (contracts.EditTrendingServiceResponse, error)
 	IncrementQueryCount(ctx context.Context, query string, serviceAreaID string) (contracts.EditTrendingServiceResponse, error)
@@ -37,7 +37,7 @@ func NewStore(db *sqlx.DB, config config.DatabaseConfig) Store {
 	}
 }
 
-func (s store) GetTrendingQueries(ctx context.Context, serviceAreaID string) ([]contracts.TrendingSchemaDB, error) {
+func (s store) GetTopTrendingQueries(ctx context.Context, serviceAreaID string) ([]contracts.TrendingSchemaDB, error) {
 	var dbResults []contracts.TrendingSchemaDB
 
 	ctx, cancel := context.WithTimeout(ctx, s.config.Timeout)

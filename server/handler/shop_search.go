@@ -16,7 +16,7 @@ func ShopSearch(service shopsearch.Service) http.HandlerFunc {
 			errorMessage := fmt.Sprintf("error in getting products from shop for query %s: %s", req.Query, err)
 			writeFailureResponse(w, http.StatusInternalServerError, errorMessage)
 		} else {
-			writeSuccessResponse(w, results)
+			writeSuccessProductResponse(w, results)
 		}
 	}
 }

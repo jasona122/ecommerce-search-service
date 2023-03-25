@@ -26,13 +26,18 @@ func writeResponseJSON(w http.ResponseWriter, response contracts.Response) {
 	w.Write(responseJSON)
 }
 
-func writeSuccessResponse(w http.ResponseWriter, results []contracts.ProductSearchResult) {
+func writeSuccessResponse(w http.ResponseWriter, data contracts.ResponseData) {
 	writeResponseJSON(w, contracts.Response{
 		StatusCode: http.StatusOK,
-		Data:       contracts.ProductSearchResponse{Results: results},
+		Data:       data,
 		Success:    true,
 		Errors:     nil,
 	})
+}
+
+func writeSuccessProductResponse(w http.ResponseWriter, results []contracts.ProductSearchResult) {
+	data := contracts.ProductSearchResponse{Results: results}
+	writeSuccessResponse(w, data)
 }
 
 func writeFailureResponse(w http.ResponseWriter, statusCode int, message string) {

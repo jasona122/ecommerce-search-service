@@ -30,3 +30,7 @@ func newDBConfig() DatabaseConfig {
 func (config DatabaseConfig) GetConnectionURL() string {
 	return fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", config.User, config.Password, config.Host, config.Port, config.Name)
 }
+
+func (conf Config) GetDatabaseConfig() DatabaseConfig {
+	return conf.dbConfig
+}
