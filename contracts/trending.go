@@ -5,13 +5,13 @@ import "fmt"
 type TrendingSchemaDB struct {
 	ID            int    `json:"id" db:"id"`
 	Query         string `json:"query" db:"query"`
-	Count         int    `json:"count" db:"count"`
+	QueryCount    int    `json:"query_count" db:"query_count"`
 	ServiceAreaID string `json:"service_area_id" db:"service_area_id"`
 }
 
 type GetTrendingServiceResult struct {
-	Query string `json:"query"`
-	Count int    `json:"count"`
+	Query      string `json:"query"`
+	QueryCount int    `json:"count"`
 }
 
 type GetTrendingServiceResponse struct {

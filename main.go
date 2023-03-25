@@ -29,15 +29,19 @@ func main() {
 }
 
 func initServices(configs config.Config) service.Services {
-	db.Init(config.DatabaseConfig{})
+	err := db.Init(configs.GetDatabaseConfig())
+	if err != nil {
+		panic(fmt.Sprintf("could not initialize DB: %s", err))
+	}
 
 	esService, err := elasticsearch.NewProductSearchESService(configs.GetElasticSearchConfig())
 	if err != nil {
 		panic(fmt.Sprintf("could not initialize product ES service: %s", err))
 	}
-	productSearchService := productsearch.NewService(esService)
-	shopSearchService := shopsearch.NewService(esService)
+
 	trendingService := trending.NewService(config.DatabaseConfig{})
+	productSearchService := productsearch.NewService(esService, trendingService)
+	shopSearchService := shopsearch.NewService(esService, trendingService)
 
 	return service.Services{
 		ProductSearchService: productSearchService,

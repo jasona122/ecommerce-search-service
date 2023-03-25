@@ -34,8 +34,8 @@ func (s service) GetTopTrendingQueries(ctx context.Context, serviceAreaID string
 	var results []contracts.GetTrendingServiceResult
 	for _, dbResult := range dbResults {
 		result := contracts.GetTrendingServiceResult{
-			Query: dbResult.Query,
-			Count: dbResult.Count,
+			Query:      dbResult.Query,
+			QueryCount: dbResult.QueryCount,
 		}
 		results = append(results, result)
 	}
