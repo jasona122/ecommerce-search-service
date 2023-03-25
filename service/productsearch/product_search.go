@@ -8,7 +8,7 @@ import (
 )
 
 type Service interface {
-	GetAllProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error)
+	GetProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error)
 }
 
 type service struct {
@@ -21,7 +21,7 @@ func NewService(esService elasticsearch.Service) Service {
 	}
 }
 
-func (s service) GetAllProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error) {
+func (s service) GetProducts(ctx context.Context, req contracts.Request) ([]contracts.ProductSearchResult, error) {
 	productCategory := ""
 	if contracts.IsValidProductCategory(req.Category) {
 		productCategory = req.Category
