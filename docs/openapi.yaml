@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  title: E-commerce app API Documentation
+  version: 1.0.0
+components:
+  schemas:
+    APIResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Data'
+        success:
+          type: boolean
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Data:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
+    Result:
+      type: object
+      properties:
+        name:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        error:
+          type: string
+paths:
+  /ping:
+    get:
+      summary: Ping handler
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+  /products:
+    get:
+      summary: Search products
+      parameters:
+        - in: query
+          name: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+    post:
+      summary: Add product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+  /shop:
+    get:
+      summary: Search shops
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+  /trending:
+    get:
+      summary: Get top trending queries
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+    post:
+      summary: Add trending query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+    delete:
+      summary: Delete trending query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
